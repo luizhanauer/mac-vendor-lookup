@@ -9,6 +9,3 @@ workers_dev = false
 routes = [
   { pattern = "mac-vendor-lookup.hanauerlabs.com.br", custom_domain = true }
 ]
-
-[site]
-bucket = ""
