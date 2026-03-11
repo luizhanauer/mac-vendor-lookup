@@ -1,0 +1,36 @@
+name: Update Vendor Database
+
+on:
+  schedule:
+    - cron: '0 0 * * 0' # Executa toda meia-noite de domingo
+  workflow_dispatch:      # Permite disparar o update manualmente pelo painel do GitHub
+
+permissions:
+  contents: write         # Permissão estrita e necessária para fazer o push na branch gh-pages
+
+jobs:
+  generate-and-deploy:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Download Wireshark manuf file
+        run: curl -L -s https://www.wireshark.org/download/automated/data/manuf -o manuf.txt
+
+      - name: Run Go Generator
+        run: go run cmd/generator/main.go -input manuf.txt -output public
+
+      - name: Deploy to GitHub Pages (gh-pages branch)
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages
+          commit_message: "chore(data): auto-update mac vendor database [skip ci]"
+          force_orphan: true # Mantém a branch gh-pages limpa, com apenas 1 commit de histórico
