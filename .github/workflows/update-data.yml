@@ -33,4 +33,4 @@ jobs:
           publish_dir: ./public
           publish_branch: gh-pages
           commit_message: "chore(data): auto-update mac vendor database [skip ci]"
-          force_orphan: true # Mantém a branch gh-pages limpa, com apenas 1 commit de histórico
+          keep_files: true # ESSENCIAL: Impede que a atualização de dados apague a interface Vue
