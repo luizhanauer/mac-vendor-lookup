@@ -1,0 +1,14 @@
+name = "mac-vendors-api"
+main = "src/worker.ts"
+compatibility_date = "2024-03-10"
+
+# Desativa a rota padrão .workers.dev para proteger o acesso
+workers_dev = false 
+
+# Mapeia automaticamente o Worker para o seu subdomínio customizado
+routes = [
+  { pattern = "mac-vendor-lookup.hanauerlabs.com.br", custom_domain = true }
+]
+
+[site]
+bucket = ""
