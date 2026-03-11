@@ -29,6 +29,11 @@ jobs:
           npm install
           npm run build
 
+      - name: Copy Portfolio Assets to Dist
+        run: |
+          mkdir -p ./frontend/dist/assets
+          cp -r ./portfolio-assets/* ./frontend/dist/assets/ || true
+
       - name: Deploy to GitHub Pages (gh-pages branch)
         uses: peaceiris/actions-gh-pages@v3
         with:
